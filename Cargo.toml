@@ -1,0 +1,19 @@
+[package]
+name = "linear_regression"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "predictor"
+path = "src/predictor.rs"
+
+[[bin]]
+name = "trainer"
+path = "src/trainer.rs"
+
+[dependencies]
+serde = { version = "1.0.219", features = ["derive"]}
+csv = "1.3.1"
+eframe = "0.31.1"
+egui = "0.31.1"
+egui_plot = "0.32.1"
