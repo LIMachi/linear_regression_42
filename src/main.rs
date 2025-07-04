@@ -118,7 +118,7 @@ impl App {
         ui.line(Line::new("Prediction", line_points));
     }
     
-    fn mouse(&mut self, ui: &mut Ui, plot_view: &PlotResponse<()>, pos: Pos2) {
+    fn mouse(&mut self, _ui: &mut Ui, plot_view: &PlotResponse<()>, pos: Pos2) {
         if plot_view.response.ctx.input(|i| i.pointer.button_clicked(PointerButton::Primary)) {
             let pos = &plot_view.transform.value_from_position(pos);
             self.linear_regresser.data.push(Entry {
@@ -134,8 +134,8 @@ impl App {
                 let dx = e.x - pos.x;
                 let dy = e.y - pos.y;
                 let d = dx * dx + dy * dy;
-                if d <= 25. { //we are within 5 pixels of this point
-                    if let Some((b, bd)) = best {
+                if d <= 25. {
+                    if let Some((_, bd)) = best {
                         if d < bd {
                             best = Some((i, d));
                         }
@@ -175,7 +175,7 @@ impl eframe::App for App {
             let plot_view = Plot::new("Regression")
                 .x_axis_label("km")
                 .y_axis_label("price")
-                .label_formatter(|name, value| format!("km: {:.3}\nprice: {:.3}", value.x, value.y))
+                .label_formatter(|_name, value| format!("km: {:.3}\nprice: {:.3}", value.x, value.y))
                 .show(ui, |ui| self.plot(ui));
             if let Some(pointer_pos) = ui.ctx().pointer_interact_pos() {
                 if plot_view.response.rect.contains(pointer_pos) {
